@@ -18,6 +18,13 @@ class Pasien extends Model
         'jenis_kelamin',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'tanggal_lahir' => 'date',
+        ];
+    }
+
     public function daftarPolis(): HasMany
     {
         return $this->hasMany(DaftarPoli::class, 'pasien_id');

@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\DokterController;
+use App\Http\Controllers\Admin\JadwalPeriksaController;
+use App\Http\Controllers\Admin\ObatController;
+use App\Http\Controllers\Admin\PasienController;
+use App\Http\Controllers\Admin\PoliController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +32,12 @@ Route::middleware('auth')->group(function (): void {
     Route::view('/pasien/dashboard', 'pasien.dashboard')
         ->middleware('role:pasien')
         ->name('pasien.dashboard');
+
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function (): void {
+        Route::resource('poli', PoliController::class)->except('show');
+        Route::resource('dokter', DokterController::class)->except('show');
+        Route::resource('pasien', PasienController::class)->except('show');
+        Route::resource('obat', ObatController::class)->except('show');
+        Route::resource('jadwal-periksa', JadwalPeriksaController::class)->except('show');
+    });
 });
